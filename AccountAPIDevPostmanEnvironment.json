@@ -1,0 +1,14 @@
+{
+	"id": "0f691c57-6fd2-4b0a-be8d-5f9d39a0c521",
+	"name": "AccountAPI-Dev",
+	"values": [
+		{
+			"key": "AccountApiEndPoint",
+			"value": "http://10.192.185.8:8080/account/api",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-05-12T13:59:55.008Z",
+	"_postman_exported_using": "Postman/7.24.0"
+}

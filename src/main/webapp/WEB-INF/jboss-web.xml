@@ -1,0 +1,3 @@
+<jboss-web>
+    <context-root>account</context-root>
+</jboss-web>

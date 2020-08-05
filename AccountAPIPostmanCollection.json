@@ -1,0 +1,834 @@
+{
+	"info": {
+		"_postman_id": "aa340671-f242-4056-b353-ce84e9aca609",
+		"name": "Account API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "username already exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8b2f981f-6bae-489e-8b5e-c6b3cf84b02b",
+						"exec": [
+							"pm.test(\"Status code is 409\", function () { pm.response.to.have.status(409); });",
+							"pm.test(\"Content-Type header is present\", function () {",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.test(\"response is non empty\", function () {",
+							"    pm.response.to.be.withBody;",
+							"    pm.response.to.be.json;",
+							"    pm.expect(jsonData.message).to.eql(\"Username already exists: MPOND\");",
+							"    pm.expect(jsonData.status).to.eql(409);",
+							"    pm.expect(jsonData.path).to.eql(\"/account/api/user/MPOND\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/MPOND",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"MPOND"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Username not exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eac5a34c-fb90-4b4f-ab1d-c7cd001d8029",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.details).to.eql(\"User Name Available\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"200 OK\");\r",
+							"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/test123",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"test123"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompanyCode - invalid request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "39e6558e-a439-4f18-a479-c06d91fd2643",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.message).to.eql(\"Company Id:1 not found\");\r",
+							"    pm.expect(jsonData.status).to.eql(404);\r",
+							"    pm.expect(jsonData.path).to.eql(\"/account/api/company\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?companyId=1",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "companyId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompanyCode - valid request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0921278f-fb44-4eea-add7-75bf1d9bc3e0",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.companyId).to.eql(405839);\r",
+							"    pm.expect(jsonData.companyName).to.eql(\"ED'S SUPPLY COMPANY\");\r",
+							"    pm.expect(jsonData.country).to.eql(\"US\");\r",
+							"    pm.expect(jsonData.companyTypeName).to.eql(\"Domestic Distributor\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?companyId=405839",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "companyId",
+							"value": "405839"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company Details By Zipcode - valid request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0921278f-fb44-4eea-add7-75bf1d9bc3e0",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.CompanyDetails).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"tests[\"Checking JSON response\"] = jsonData.CompanyDetails !== null;\r",
+							"\r",
+							"tests[\"Checking JSON response length\"] = jsonData.CompanyDetails.length > 0;\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?zipcode=98052",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "zipcode",
+							"value": "98052"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Compny Details By Zipcode - zipcode as empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0921278f-fb44-4eea-add7-75bf1d9bc3e0",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(400);\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"zipcode not empty\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?zipcode=",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "zipcode",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Company Details by Zipcode - zipcode as invalid param",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0921278f-fb44-4eea-add7-75bf1d9bc3e0",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(404);\r",
+							"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"Zipcode:93845 not found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?zipcode=93845",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "zipcode",
+							"value": "93845"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User Personalization - success request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74c1dcb5-9a2b-4eb1-b403-9e49b7b82a62",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () { pm.response.to.have.status(201); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(\"Success\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"201 CREATED\");\r",
+							"    pm.expect(jsonData.details).to.eql(\"Personalization settings saved successfully\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\" : \"MPOND\",\n\t\"companyTypes\" : [],\n\t\"companyRoles\" : []\n\t\n}",
+					"options": {
+						"raw": {}
+					}
+				},
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/settings",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"settings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User personalization - UserID empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "74c1dcb5-9a2b-4eb1-b403-9e49b7b82a62",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(400);\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"userID not empty\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"userId\" : \"\",\n\t\"companyTypes\" : [\"Commercial\",\"Residential\"],\n\t\"companyRoles\" : []\n\t\n}"
+				},
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/settings",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"settings"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompanyCode - request as empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5841c622-3f4e-4ead-a12a-f9f460bcb016",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(400);\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"companyId not empty\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?companyId=",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "companyId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CompanyCode - companyCode as non integer",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cc7988fd-b30f-4d87-92d9-bcf49c233855",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(400);\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"Please enter valid companyId\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/company?companyId=test123",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"company"
+					],
+					"query": [
+						{
+							"key": "companyId",
+							"value": "test123"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Status - userId empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "988e92d4-78f9-40ea-8a6b-9603ce4b0ea0",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(400);\r",
+							"    pm.expect(jsonData.message).to.eql(\"userId not empty\");\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/status?userId=",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"status"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account status API - valid request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "060d2ba1-f867-4cb4-9324-e27df3060f41",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.userId).to.eql(\"MPOND\");\r",
+							"    pm.expect(jsonData.userStatus).to.eql(\"Active\");\r",
+							"     pm.expect(jsonData.companyRoles).to.be.an('array').that.is.not.empty;\r",
+							"     pm.expect(jsonData.companyTypes).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							"tests[\"Checking JSON response\"] = jsonData.companyRoles !== null;\r",
+							"tests[\"Checking JSON response\"] = jsonData.companyTypes !== null;\r",
+							"tests[\"Checking site content results response\"] = jsonData.companyRoles.length > 0;"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/status?userId=MPOND",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"status"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "MPOND"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Status API - User record not exists",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db34ea4c-f170-4a85-8be3-7f7177c30bff",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () { pm.response.to.have.status(404); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.status).to.eql(404);\r",
+							"    pm.expect(jsonData.message).to.eql(\"UserId:testtesttest not found\");\r",
+							"    pm.expect(jsonData.error).to.eql(\"Not Found\");\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/status?userId=testtesttest",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"status"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "testtesttest"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pending approval requests - UsedId as not admin access",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e790ad12-ebe4-43c3-a062-51aec6e1b749",
+						"exec": [
+							"pm.test(\"Status code is 403\", function () { pm.response.to.have.status(403); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.error).to.eql(\"Forbidden\");\r",
+							"    pm.expect(jsonData.message).to.eql(\"access denied\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/userApprovalRequests?userId=MPOND",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"userApprovalRequests"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "MPOND"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Approval requests - userID as admin role",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7b20ea46-9572-43b5-a4ab-e26ab5ea4675",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () { pm.response.to.have.status(200); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.approvalUsers).to.be.an('array').that.is.not.empty;\r",
+							"    pm.expect(jsonData.count).to.be.above(0);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/userApprovalRequests?userId=lmonendo",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"userApprovalRequests"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": "lmonendo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account Approval APi - userId empty",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4847ffa3-012e-49cb-8257-fcaa87458c87",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () { pm.response.to.have.status(400); });\r",
+							"pm.test(\"Content-Type header is present\", function () {\r",
+							"    pm.response.to.have.header(\"Content-Type\") === 'application/json';\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.test(\"response is non empty\", function () {\r",
+							"    pm.response.to.be.withBody;\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.expect(jsonData.message).to.eql(\"userId not empty\");\r",
+							"    pm.expect(jsonData.error).to.eql(\"Bad Request\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{AccountApiEndPoint}}/user/userApprovalRequests?userId=",
+					"host": [
+						"{{AccountApiEndPoint}}"
+					],
+					"path": [
+						"user",
+						"userApprovalRequests"
+					],
+					"query": [
+						{
+							"key": "userId",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

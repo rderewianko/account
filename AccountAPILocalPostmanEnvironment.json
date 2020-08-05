@@ -1,0 +1,14 @@
+{
+	"id": "4b4f89c0-7492-44a3-b9f4-ec0e4aaf2a26",
+	"name": "AccountAPI-Local",
+	"values": [
+		{
+			"key": "AccountApiEndPoint",
+			"value": "http://localhost:8080/account/api",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2020-05-12T14:00:47.055Z",
+	"_postman_exported_using": "Postman/7.24.0"
+}
